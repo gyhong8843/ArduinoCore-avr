@@ -194,7 +194,7 @@ const USB_Descriptor_String_t ProductString =
 	.Header                 = {.Size = USB_STRING_LEN(16), .Type = DTYPE_String},
 
 	#if DEVICE_PID == 0x0036
-	.UnicodeString          = L"Arduino Leonardo" 
+	.UnicodeString          = L"WASHBANK        " 
 	#elif DEVICE_PID == 0x0037
 	.UnicodeString			= L"Arduino Micro   "
 	#elif DEVICE_PID == 0x003C
