@@ -21,16 +21,14 @@ jobs:
       - name: Build Leonardo Bootloader
         run: |
           cd bootloaders/caterina
-          # Makefile 안에 leonardo라는 이름이 없을 경우를 대비해 
-          # MCU와 VID/PID를 직접 주입하여 'all' 타겟으로 빌드합니다.
           make all MCU=atmega32u4 VID=0x2341 PID=0x0036 F_CPU=16000000 LUFA_PATH=../../LUFA
           
-          # 생성된 파일 이름을 확인하고 업로드를 위해 이름을 맞춥니다.
-          # (보통 Caterina.hex 또는 Caterina-Leonardo.hex로 생성됨)
-          cp *.hex Caterina-Leonardo.hex
-          
+          # 파일이 있는지 확인하고 업로드할 이름을 확실히 지정
+          ls -l Caterina.hex
+
       - name: Upload Hex File
         uses: actions/upload-artifact@v4
         with:
           name: Leonardo-Bootloader
-          path: bootloaders/caterina/Caterina-Leonardo.hex
+          # 경로를 Caterina.hex로 직접 지정합니다.
+          path: bootloaders/caterina/Caterina.hex
