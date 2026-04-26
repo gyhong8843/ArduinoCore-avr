@@ -7,18 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # 최신 버전으로 업데이트
+        uses: actions/checkout@v4
 
       - name: Install AVR Toolchain
         run: sudo apt-get update && sudo apt-get install -y gcc-avr binutils-avr avr-libc make
 
       - name: Build Leonardo Bootloader
         run: |
+          # LUFA 폴더가 실제로 있는지 확인 (디버깅용)
+          ls -R bootloaders/LUFA | head -n 10
+          
           cd bootloaders/caterina
-          make leonardo
+          # Makefile의 경로 설정을 무시하고 직접 경로를 주입하여 빌드
+          make leonardo LUFA_PATH=../LUFA
           
       - name: Upload Hex File
-        uses: actions/upload-artifact@v4  # v3에서 v4로 수정 (에러 해결 지점)
+        uses: actions/upload-artifact@v4
         with:
           name: Leonardo-Bootloader
           path: bootloaders/caterina/Caterina-Leonardo.hex
